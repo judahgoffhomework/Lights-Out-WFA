@@ -14,8 +14,8 @@ namespace LightsOut
 	{
 		private const int GridOffset = 25;			// Distance from upper-left side of window
 		private const int GridLength = 200;			// Size in pixels of grid
-		private const int NumCells = 3;				// Number of cells in grid
-		private const int CellLength = GridLength / NumCells;
+		private static int NumCells = 3;				// Number of cells in grid
+		private static int CellLength = GridLength / NumCells;
 
 		private bool[,] grid;                       // Stores on/off state of cells in grid
 		private Random rand;						// Used to generate random numbers
@@ -26,6 +26,11 @@ namespace LightsOut
 
 			rand = new Random(); // Initialize random number generator
 
+			resetGrid();
+		}
+
+		private void resetGrid()
+		{
 			grid = new bool[NumCells, NumCells];
 
 			// Turn entire grid on
@@ -137,5 +142,51 @@ namespace LightsOut
 			AboutForm aboutBox = new AboutForm();
 			aboutBox.ShowDialog(this);
 		}
+
+		private bool changeGridSize()
+		{
+			if (this.x3ToolStripMenuItem.Checked == true)
+				this.x3ToolStripMenuItem.Checked = false;
+			if (this.x4ToolStripMenuItem.Checked == true)
+				this.x4ToolStripMenuItem.Checked = false;
+			if (this.x5ToolStripMenuItem.Checked == true)
+				this.x5ToolStripMenuItem.Checked = false;
+
+			resetGrid();
+
+			CellLength = GridLength / NumCells;
+
+			return true;
+		}
+
+		private void x3ToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			NumCells = 3;
+			this.x3ToolStripMenuItem.Checked = changeGridSize();
+			this.Invalidate();
+			// newGameButton_Click(sender, e);
+		}
+
+		private void x4ToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			NumCells = 4;
+			this.x4ToolStripMenuItem.Checked = changeGridSize();
+			this.Invalidate();
+			// newGameButton_Click(sender, e);
+		}
+
+		private void x5ToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			NumCells = 5;
+			this.x5ToolStripMenuItem.Checked = changeGridSize();
+			this.Invalidate();
+			// Changing size probably shouldn't auto start a game
+			// newGameButton_Click(sender, e); 
+		}
 	}
+
+
+
+
+
 }
